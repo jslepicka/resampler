@@ -1,6 +1,32 @@
 # resampler
 A continously variable audio resampler.  Also, an SSE optimized IIR filter.
 
+## c_resampler
+This is a continously variable fractional-rate resampler.  input_rate is fixed.  output_rate can be adjusted at any time.  Input/output format is int16_t.  Input should be at least 8x oversampled for best results.  Output is interpolated using a 4-point, 3rd order B-spline polynomial interpolator (see http://yehar.com/blog/wp-content/uploads/2009/08/deip.pdf)
+
+Usage:
+```
+c_resampler resampler(384000.0, 48000.0);
+//...
+//event loop
+while (true) {
+ //...
+ if (input_samples_available) {
+  resampler.set_output_rate(requested_sample_rate);
+  for (i = 0; i < num_samples; i++) { //num_samples / filter ratio must not exceed resampler OUTPUT_BUF_LEN
+   resampler.process(input_sample);
+  }
+ }
+}
+
+//in audio callback, etc:
+const int16_t *buf;
+int available_samples = resampler.get_output_buf(&buf);
+for (int i = 0; i < num_samples; i++) {
+ send_to_soundcard(*buf++);
+}
+```
+
 ## c_biquad4
 This is an SSE-optimized implementation of an 8th order IIR filter.  4 biquad filters (transposed direct form II) are processed in parallel.
 
