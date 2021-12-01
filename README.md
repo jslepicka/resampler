@@ -1,8 +1,8 @@
 # resampler
-A continously variable fractional-rate audio resampler.  Also, an SSE optimized IIR filter.
+A continuously variable fractional-rate audio resampler.  Also, an SSE optimized IIR filter.
 
 ## c_resampler
-This is a continously variable fractional-rate resampler.  input_rate is fixed.  output_rate can be adjusted at any time.  Input/output format is int16_t.  Input should be at least 8x oversampled for best results.  Output is interpolated using a 4-point, 3rd order B-spline polynomial interpolator (see http://yehar.com/blog/wp-content/uploads/2009/08/deip.pdf).
+This is a continuously variable fractional-rate resampler.  input_rate is fixed.  output_rate can be adjusted at any time.  Input/output format is int16_t.  Input should be at least 8x oversampled for best results.  Output is interpolated using a 4-point, 3rd order B-spline polynomial interpolator (see http://yehar.com/blog/wp-content/uploads/2009/08/deip.pdf).
 
 Usage:
 ```
